@@ -16,7 +16,7 @@ class Create:
                                         USD VARCHAR(255),
                                         MID int,
                                         EFFECTIVEDATE VARCHAR(255),
-                                        WSKAZNIK REAL
+                                        WSKAZNIK int
                                         );"""
         cursor.execute(table)
         print('Table Created!')

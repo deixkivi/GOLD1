@@ -1,4 +1,5 @@
 
+from wskaznik1 import select_all_tasks
 import requests
 import json
 from requests.exceptions import HTTPError
@@ -7,6 +8,7 @@ from sys import argv
 from os import getenv
 from dotenv import load_dotenv 
 from create1 import Create
+import wskaznik1
 
 
 load_dotenv()
@@ -74,9 +76,10 @@ if len(argv) == 2 and argv[1] == 'insert':
 
             data_tuple = (value, date, usd, mid, effectivedate)
             cursor.execute(sqlite_insert_with_param, data_tuple)
+            
             conn.commit()
             print("Python Variables inserted successfully into SqliteDb_developers table")
-
+            wskaznik1.select_all_tasks(conn)
             cursor.close()
 
         except sqlite3.Error as error:
@@ -85,6 +88,7 @@ if len(argv) == 2 and argv[1] == 'insert':
             if conn:
                 conn.close()
                 print("The SQLite connection is closed")
+        
 
     if __name__ == '__main__':
     # JSON jako string oraz JSON
@@ -98,4 +102,8 @@ if len(argv) == 2 and argv[1] == 'insert':
     # Kursy USD z <rates_number> dni.
         for i in range(len(Gold)):
             insertVaribleIntoTable(Gold[i]['cena'],Gold[i]['data'],'USD',Dol['rates'][i]['mid'], Dol['rates'][i]['effectiveDate'])
+            
+
+
+    
 
